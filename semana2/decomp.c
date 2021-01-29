@@ -13,25 +13,28 @@ int prox_primo( int numero) {
 int main() {
     int n;
     scanf(" %d", &n);
+    int res = n;
+    int fator = 2;
+    int divisivel = 0;
     if(n <= 1) {
         printf("Erro, número precisa ser maior do que 1!\n");
     } else {
-        int fator = 2;
-        int res = n;
-        printf("res: %d | fator: %d\n", res, fator);
-        for(int i = n; i > 1;) {
-            if(i % fator == 0) {
-                res = i / fator; 
-                i = res;
-                if(res == 1) {
-                    printf("res: %d\t|\n", res);
-                } else {
-                    printf("res: %d\t| fator: %d\n", res, fator);
+        while(1) {
+            if(res % fator == 0) {
+                while(res % fator == 0) {
+                    res /= fator;
+                    divisivel++;
                 }
-            } else {
-                fator = prox_primo(fator);
-                printf("oi, estou no else do fator! o fator eh -> %d\n", fator);
+                printf("%d^%d", fator, divisivel);
+                if(res > 1) {
+                    printf("*");
+                }
+            }            
+            if(res == 1) {
+                break;
             }
+            divisivel = 0;
+            fator = prox_primo(fator);
         }
     }
     return 0;
