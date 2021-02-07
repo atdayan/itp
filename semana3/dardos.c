@@ -5,37 +5,42 @@ double calc_dist(double x1, double y1, double x2, double y2) {
     double dist = sqrt(pow((x1-x2),2)+pow((y1-y2),2)); 
     return dist;
 }
-int calc_pont(double dist, double ant_dist) {
-    double diferenca = fabs(dist-ant_dist);
-    if(dist >= 0 && dist <= 1) {
-       return 10; 
-    } else if(dist > 1 && dist <= 2) {
-        return 6;
-    }else if(dist > 2 && dist <= 3) {
-        return 4;
+int calc_pontuacao(double distancia, int bonus) {
+    int pont = 0;
+    if(distancia >= 0 && distancia <= 1) {
+        pont = 10;
+    } else if(distancia > 1 && distancia <= 2) {
+        pont = 6;
+    } else if(distancia > 2 && distancia <= 3) {
+        pont = 4;
+    } 
+    if(bonus) {
+        return pont/2;
     }
-    if(diferenca >= 0 && diferenca <= 1) {
-       pont_bonus = 5; 
-    } else if(diferenca > 1 && diferenca <= 2) {
-       pont_bonus = 3; 
-    }else if(diferenca > 2 && diferenca <= 3) {
-       pont_bonus = 2; 
-    }
-    return 0;
+    return pont;
 }
-
 int main() {
-    double user_x, user_y;
-    scanf(" %lf %lf", &user_x, &user_y);
-    double dist = calc_dist(x,y,0,0);
-    int pont = calc_pont(dist);
-    int bonus = 0;
-
+    double x, y;
+    double dist_centro;
+    double dist_ponto_anterior;
+    double aux_x, aux_y;
+    int pont = 0;
+    int pont_bonus = 0;
+    scanf("%lf %lf", &x, &y);
+    dist_centro = calc_dist(x, y, 0, 0);
+    pont = calc_pontuacao(dist_centro, 0);
+    aux_x = x;
+    aux_y = y;
     for(int i = 0; i < 9; i++) {
-        scanf(" %lf %lf", &x, &y);
-        dist = calc_dist(x,y,0,0); 
+        scanf("%lf %lf", &x, &y);
+        dist_centro = calc_dist(x, y, 0, 0);
+        dist_ponto_anterior = calc_dist(x, y, aux_x, aux_y);
         
+        pont += calc_pontuacao(dist_centro, 0);
+        pont_bonus += calc_pontuacao(dist_ponto_anterior, 1);
+        aux_x = x;
+        aux_y = y;
     }
-    printf("%lf",calc_dist(x,y,0,0));
+    printf("%d\n", (pont + pont_bonus));
     return 0;
 }
