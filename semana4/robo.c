@@ -15,11 +15,6 @@ int main() {
     x--;
     y--;
 
-//    for(int i = 0; i < lin; i++) {
-//        for(int j = 0; j < col; j++)
-//           printf("%c", mapa[i][j]);
-//        printf("\n");
-//    }
     char obstaculo;
     for(int i = 0; i < qntd_mov; i++) {
         switch(direcao) {
